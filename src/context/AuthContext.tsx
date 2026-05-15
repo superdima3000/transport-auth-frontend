@@ -4,7 +4,10 @@ import api from '../api/axios';
 
 // 1️⃣ Описываем структуру контекста
 type AuthContextType = {
-  user: { token: string } | null;
+  user: { 
+    token: string;
+    login: string;
+  } | null;
   loading: boolean;
   login: (login: string, password: string) => Promise<void>;
   register: (login: string, password: string, is_admin?: number) => Promise<void>;
@@ -30,14 +33,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) setUser({ token });
+    const login = localStorage.getItem('login'); // Восстанавливаем логин при перезагрузке
+    
+    if (token && login) {
+      setUser({ token, login });
+    }
     setLoading(false);
   }, []);
 
-  const login = async (login: string, password: string) => {
+  const loginUser = async (login: string, password: string) => {
     const { data } = await api.post('/auth/sign-in', { login, password });
+    
+    // Сохраняем и токен, и логин в хранилище
     localStorage.setItem('token', data.token);
-    setUser({ token: data.token });
+    localStorage.setItem('login', login); 
+    
+    // Обновляем стейт двумя полями
+    setUser({ token: data.token, login });
   };
 
   const register = async (login: string, password: string, is_admin = 0) => {
@@ -46,11 +58,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('login'); // Очищаем логин при выходе
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login: loginUser, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
