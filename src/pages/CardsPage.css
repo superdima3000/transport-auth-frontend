@@ -1,0 +1,55 @@
+.cards-page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  
+  /* Шапка страницы */
+  .cards-page__header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  /* Навигация */
+  .cards-page__nav {
+    margin-bottom: 12px;
+  }
+  
+  .cards-page__back-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.15s ease;
+    cursor: pointer;
+  }
+  
+  .cards-page__back-link:hover {
+    background: #e9ecef;
+    transform: translateX(-2px);
+  }
+  
+  .cards-page__title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+  }
+  
+  /* Кнопка переключения формы */
+  .cards-page__actions {
+    margin-bottom: 20px;
+  }
+  
+  .cards-page__actions .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
